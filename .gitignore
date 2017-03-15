@@ -6,5 +6,6 @@ antbin/
 .metadata
 .settings
 .project
+.iml
 ahni.jar
 hs_err*
