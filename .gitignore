@@ -1,6 +1,7 @@
 db/
 bin/
 antbin/
+.idea/
 .classpath
 .metadata
 .settings
