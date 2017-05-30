@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 
+import com.anji.nn.Connection;
 import org.jgapcustomised.Allele;
 import org.jgapcustomised.ChromosomeMaterial;
 import org.jgapcustomised.Configuration;
@@ -100,9 +101,18 @@ public class WeightMutationOperator extends MutationOperator implements Configur
 			throw new AnjiRequiredException(NeatConfiguration.class.toString());
 		}
 		NeatConfiguration config = (NeatConfiguration) jgapConfig;
-		
+
+		List<Allele> alleles;
 		// If bias is provided via an input to the network then just get connection alleles, otherwise get connection and neuron alleles.
-		List<Allele> alleles = config.biasViaInput() ? NeatChromosomeUtility.getConnectionList(target.getAlleles()) : new ArrayList(target.getAlleles());
+		if(config.biasViaInput()){
+			List<ConnectionAllele> connectionAlleles = NeatChromosomeUtility.getConnectionList(target.getAlleles());
+			alleles = new ArrayList<>();
+			connectionAlleles.forEach(alleles::add);
+
+		}else{
+			alleles = new ArrayList<>(target.getAlleles());
+		}
+
 		Collections.shuffle(alleles, config.getRandomGenerator());
 
 		if (!dbg) {
